@@ -15,10 +15,9 @@ class Authomat {
     }
 
     $redirect = isset($config["redirect"]) ? $config["redirect"] : "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    $eredirect = isset($config["errorredirect"]) ? $config["errorredirect"] : "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
     if (!isset($_COOKIE["authomatauthkey"])) {
-      $authkey = file_get_contents("http://vantezzen.de/authomat/auth.php?m=getkey&secret=".$config["secret"]."&provider=".$provider."&redirect=".htmlentities($redirect)."&eredirect=".htmlentities($eredirect));
+      $authkey = file_get_contents("http://vantezzen.de/authomat/auth.php?m=getkey&secret=".$config["secret"]."&provider=".$provider."&redirect=".htmlentities($redirect));
       setcookie("authomatauthkey", $authkey);
       header("Location: http://vantezzen.de/authomat/auth.php?m=auth&authkey=".$authkey);
       exit();
