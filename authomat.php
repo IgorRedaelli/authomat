@@ -18,6 +18,11 @@ class Authomat {
 
     if (!isset($_COOKIE["authomatauthkey"])) {
       $authkey = file_get_contents("http://vantezzen.de/authomat/auth.php?m=getkey&secret=".$config["secret"]."&provider=".$provider."&redirect=".htmlentities($redirect));
+      if (count(explode(' ', $authkey)) > 1) {
+        return array(
+          "error" => $authkey
+        );
+      }
       setcookie("authomatauthkey", $authkey);
       header("Location: http://vantezzen.de/authomat/auth.php?m=auth&authkey=".$authkey);
       exit();
@@ -26,6 +31,11 @@ class Authomat {
       $data = file_get_contents("http://vantezzen.de/authomat/auth.php?m=getdata&secret=".$config["secret"]."&authkey=".$authkey);
       if (empty($data)) {
         $authkey = file_get_contents("http://vantezzen.de/authomat/auth.php?m=getkey&secret=".$config["secret"]."&provider=".$provider."&redirect=".htmlentities($redirect));
+        if (count(explode(' ', $authkey)) > 1) {
+          return array(
+            "error" => $authkey
+          );
+        }
         setcookie("authomatauthkey", $authkey);
         header("Location: http://vantezzen.de/authomat/auth.php?m=auth&authkey=".$authkey);
         exit();
