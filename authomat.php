@@ -1,6 +1,9 @@
 <?php
 
 class Authomat {
+
+  public static $version = "1.1.0";
+	
   public static function auth($config, $provider) {
     if (!is_array($config) && !file_exists($config)) {
 			throw new Exception("The configuration is neighter an array or a valid file.", 1);
